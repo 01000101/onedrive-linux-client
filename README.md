@@ -4,6 +4,12 @@ onedrive-linux-client
 Microsoft OneDrive (formerly SkyDrive) Linux Client built using Qt 5 (QtQuick)
 This is a Qt Creator project and can be imported as such.
 
+Screenshots
+===========
+
+![OneDrive Linux Client Login Screen](/screenshots/Screenshot from 2014-08-10 11:34:03.png?raw=true "Login Screen")
+
+![OneDrive Linux Client Folders Screen](/screenshots/Screenshot from 2014-08-10 21:14:43.png?raw=true "Folders Screen")
 
 Prerequisites
 =============
