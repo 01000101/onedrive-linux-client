@@ -20,6 +20,12 @@ redirect you to another page.
 "api_client_secret", and "api_redirect_url" to match what you used for your new app.  
 
 
+Usage
+=====
+
+Build + Run the GUI app, click on "Get Code", then when you're redirected (after signing in) 
+copy the code in the URL to the "Authorization Code" input field in the GUI.  
+
 Notes
 =====
 
