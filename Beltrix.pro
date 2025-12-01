@@ -1,12 +1,13 @@
 TEMPLATE = app
 
-QT += qml quick widgets
+# Qt6 modules
+QT += qml quick widgets network
 
 SOURCES += main.cpp
 
 RESOURCES += qml.qrc
 
-CONFIG += console
+CONFIG += console c++17
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -16,6 +17,9 @@ include(deployment.pri)
 
 HEADERS += \
     auth.h
+
+# Target name
+TARGET = onedrive-linux-client
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 

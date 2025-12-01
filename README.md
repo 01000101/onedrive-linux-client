@@ -1,42 +1,111 @@
-onedrive-linux-client
-=====================
+# OneDrive Linux Client
 
-Microsoft OneDrive (formerly SkyDrive) Linux Client built using Qt 5 (QtQuick)
-This is a Qt Creator project and can be imported as such.
+A Microsoft OneDrive client for Linux built with Qt 6 and QML.
 
-Screenshots
-===========
+Browse, navigate, and download files from your OneDrive directly on Linux.
 
-![OneDrive Linux Client Login Screen](/screenshots/Screenshot from 2014-08-10 11:34:03.png?raw=true "Login Screen")
+## Features
 
-![OneDrive Linux Client Folders Screen](/screenshots/Screenshot from 2014-08-10 21:14:43.png?raw=true "Folders Screen")
+- OAuth 2.0 authentication with Microsoft accounts
+- Browse folders and files with visual icons
+- View storage quota
+- Download files to your local system
+- Open files/folders in the web browser
+- View file details (size, dates, type)
+- Back/Home navigation with breadcrumb path display
 
-Prerequisites
-=============
+## Demo
 
-1) Register a new application with Microsoft Developer Center. Head over 
-to https://account.live.com/developers/applications/index and click "Create Application". 
-Give the new application a name (it can be whatever you want).  
-
-Go into "API Settings" and change "Mobile or desktop client app" to "Yes". Then set the 
-"Redirect URL" to either a website you own or you can sent it to somewhere that won't 
-redirect you to another page.  
-
-2) Edit the auth.h header file and change the definitions for "api_client_id", 
-"api_client_secret", and "api_redirect_url" to match what you used for your new app.  
+[![Watch the video](https://raw.githubusercontent.com/01000101/onedrive-linux-client/master/screenshots/demo.png)](https://raw.githubusercontent.com/01000101/onedrive-linux-client/master/screenshots/demo.mp4)
 
 
-Usage
-=====
+## Requirements
 
-Build + Run the GUI app, click on "Get Code", then when you're redirected (after signing in) 
-copy the code in the URL to the "Authorization Code" input field in the GUI.  
+- Qt 6 (qt6-base-dev, qt6-declarative-dev)
+- QML modules (qml6-module-qtquick-controls, qml6-module-qtquick-dialogs, qml6-module-qtquick-layouts)
+- C++17 compiler (g++ or clang++)
+- qmake6
 
-Notes
-=====
+### Ubuntu/Debian Installation
 
-I have absolutely no clue what the implications of building this and distributing it 
-with your own static app settings so end-users don't have to (client secret, specifically). 
-I'm not going to do this as I don't plan on making a business around this app, but if you 
-do decide to do this, please research the legalities around it. 
+```bash
+sudo apt install qt6-base-dev qt6-declarative-dev \
+    qml6-module-qtquick-controls qml6-module-qtquick-dialogs \
+    qml6-module-qtquick-layouts qml6-module-qtquick-window \
+    build-essential
+```
 
+## Azure App Registration
+
+Before building, you need to register an application with Microsoft:
+
+1. Go to the [Azure Portal - App Registrations](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade)
+
+2. Click **"New registration"**
+
+3. Configure your app:
+   - **Name**: Choose any name (e.g., "OneDrive Linux Client")
+   - **Supported account types**: Select **"Accounts in any organizational directory and personal Microsoft accounts"** (this is required for personal OneDrive accounts)
+   - **Redirect URI**:
+     - Platform: **"Public client/native (mobile & desktop)"**
+     - URI: `https://login.microsoftonline.com/common/oauth2/nativeclient`
+
+4. Click **"Register"**
+
+5. Copy the **"Application (client) ID"** from the Overview page
+
+6. Edit `auth.h` and update:
+   ```cpp
+   const QString api_client_id = "YOUR_APPLICATION_ID_HERE";
+   ```
+
+**Note**: For public/desktop clients, you do NOT need a client secret. The app uses the native client redirect URI which doesn't require one.
+
+## Building
+
+```bash
+qmake6 Beltrix.pro
+make
+```
+
+## Running
+
+```bash
+./onedrive-linux-client
+```
+
+## Usage
+
+1. Click **"Get Code"** - this opens your browser to Microsoft's login page
+2. Sign in with your Microsoft account and authorize the app
+3. After authorization, you'll be redirected to a URL containing a `code=` parameter
+4. Copy the code value (everything after `code=` and before any `&`)
+5. Paste the code into the app and click **"Sign In"**
+
+### Navigation
+
+- **Click** a folder to open it
+- **Click** a file to open it in your browser
+- **Right-click** any item for a context menu with options:
+  - Open
+  - Open in Browser
+  - Download (files only)
+  - Details
+- Use the **Back** (`<`) button to go to the previous folder
+- Use the **Home** button to return to the root
+
+## Technical Details
+
+- **API**: Microsoft Graph API v1.0
+- **Authentication**: OAuth 2.0 with PKCE (public client flow)
+- **OAuth Endpoint**: `https://login.microsoftonline.com/common/oauth2/v2.0`
+- **Scopes**: `Files.Read`, `Files.ReadWrite`, `User.Read`, `offline_access`
+
+## License
+
+LGPL v3 - See [LICENSE](LICENSE) for details.
+
+## Credits
+
+Originally created by [Joscor Technical Research](https://joscor.com/) (2014).
+Updated for Qt6 and Microsoft Graph API (2024).

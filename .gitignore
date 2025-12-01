@@ -1,0 +1,20 @@
+# Binary
+onedrive-linux-client
+
+# Build artifacts
+*.o
+moc_*.cpp
+qrc_*.cpp
+moc_predefs.h
+Makefile
+.qmake.stash
+
+# Qt Creator
+*.pro.user
+*.pro.user.*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*~
